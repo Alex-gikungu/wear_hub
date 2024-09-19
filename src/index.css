@@ -16,7 +16,7 @@
     left: 0;
     width: 100%;
     background-color: #333; /* Example background color */
-    padding: 10px 0; /* Example padding */
+    padding: 10px; /* Example padding */
     display: flex;
     justify-content: center; /* Center the navigation links */
   }
@@ -26,6 +26,7 @@
     padding: 0;
     margin: 0;
     display: flex;
+    margin-left: 25%;
   }
   
   .navigation-links li {
@@ -53,7 +54,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100px; /* Adjust the height as needed */
+    height: 100px; 
   }
   
   .social-icons {
@@ -139,9 +140,8 @@
 }
 
 .signup-form-container form input {
-  width:50%;
+  display: block;
   text-align: center;
-  margin-left:20%;
   margin-bottom: 10px;
   padding: 10px;
   border: 1px solid #ccc;
@@ -161,7 +161,7 @@
 }
 
 .signup-form-container form button:hover {
-  background-color: #0056b3;
+  background-color: #d32f2f;
 }
 
 
@@ -184,6 +184,7 @@
 
 .signin-form {
   display: flex;
+  font-size: large;
   flex-direction: column;
 }
 
@@ -195,16 +196,17 @@
 }
 
 .signin-button {
-  padding: 10px;
-  background-color: #007bff;
+  background-color: #d32f2f;
   color: #fff;
   border: none;
+  width: 60px;
+  margin-left:40%;
   border-radius: 4px;
   cursor: pointer;
 }
 
 .signin-button:hover {
-  background-color: #0056b3;
+  background-color: #333;
 }
 
 
@@ -276,7 +278,7 @@
   font-size: 16px;
   border: none;
   border-radius: 5px;
-  background-color: #007bff;
+  background-color: #d32f2f;
   color: #fff;
   cursor: pointer;
   transition: background-color 0.3s;
@@ -310,3 +312,101 @@ span{
 }
 
 
+
+/* CartPage.css */
+
+/* Overall container styling */
+.cart-page-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  text-align: center; /* Center align all content */
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  text-align: center; /* Center align table content */
+}
+
+table th, table td {
+  padding: 10px;
+  text-align: center; /* Center align table cells */
+  border-bottom: 1px solid #ddd;
+}
+
+table th {
+  background-color: #f2f2f2;
+}
+
+/* Remove button styling */
+button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: #d32f2f;
+}
+
+/* Payment section styling */
+.payment-section {
+  margin-top: 20px;
+  text-align: left; /* Adjust as needed */
+}
+
+.payment-section h3 {
+  margin-bottom: 10px;
+}
+
+.payment-section label {
+  display: block;
+  margin-bottom: 5px;
+  text-align: left; /* Adjust as needed */
+}
+
+.payment-section input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.payment-section button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.payment-section button:hover {
+  background-color: #45a049;
+}
+
+#phone {
+  width: 50%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#address {
+  width: 50%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
