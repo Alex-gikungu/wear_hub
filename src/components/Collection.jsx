@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from './Footer';
 import Cart from './Cart';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Collection = ({ cartItems, setCartItems }) => {
-  // Dummy array of data for the cards
   const cardsData = [
     { id: 1, image: 'wom1.jpg', title: 'Transparent Feature 1', description: 'Lorem ipsum...', rating: 4.5, price: '$50', quantity: 1 },
     { id: 2, image: 'wom2.jpg', title: 'Transparent Feature 2', description: 'Lorem ipsum...', rating: 3.8, price: '$60', quantity: 1 },
@@ -28,7 +28,6 @@ const Collection = ({ cartItems, setCartItems }) => {
     { id: 20, image: 'shoe10.jpg', title: 'Transparent Feature 20', description: 'Lorem ipsum...', rating: 4.0, price: '$240', quantity: 1 },
   ];
 
-  // Function to handle adding items to the cart
   const handleAddToCart = (item) => {
     const existingItem = cartItems.find(cartItem => cartItem.id === item.id);
     if (existingItem) {
@@ -42,48 +41,43 @@ const Collection = ({ cartItems, setCartItems }) => {
 
   return (
     <>
-      <div className="services-container">
+      <div className="container">
         {/* Navigation tabs */}
-        <nav className="navigation-container">
-          <ul className="navigation-links">
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/about">Men</Link></li>
-            <li><Link to="/services">Women</Link></li>
-            <li><Link to="/collection">Collection</Link></li>
-            <li><Link to="/customer-care">Customer Care</Link></li>
-          </ul>
-          <Cart cartItems={cartItems} />
-        </nav>
 
         {/* Services content */}
-        <div className='gg'>
-          <h1><span> Our </span> Collections </h1>
+        <div className="text-center my-4">
+          <h1><span style={{ color: '#28a745' }}>Our</span> Collections</h1>
           <p>This is where you can describe the various services you provide.</p>
         </div>
 
         {/* Render the cards */}
-        <div className="cards-container">
+        <div className="row">
           {cardsData.map(card => (
-            <div className="feature-card" key={card.id}>
-              <img src={card.image} alt="Feature image" className="feature-image" />
-              <div className="card-content">
-                <h3 className="card-title">{card.title}</h3>
-                <p className="card-description">{card.description}</p>
-                <div className="review-and-button">
-                  <div className="review-stars">
-                    {Array.from({ length: Math.floor(card.rating) }, (_, index) => (
-                      <span key={index} className="star">&#9733;</span>
-                    ))}
-                    {Array.from({ length: 5 - Math.floor(card.rating) }, (_, index) => (
-                      <span key={index + Math.floor(card.rating)} className="star">&#9734;</span>
-                    ))}
+            <div className="col-md-4 mb-4" key={card.id}>
+              <div className="card">
+                <img src={card.image} alt="Feature" className="card-img-top" />
+                <div className="card-body">
+                  <h5 className="card-title">{card.title}</h5>
+                  <p className="card-text">{card.description}</p>
+                  <div className="d-flex justify-content-between align-items-center">
+                    <div>
+                      <span className="text-warning">
+                        {Array.from({ length: Math.floor(card.rating) }, (_, index) => (
+                          <span key={index}>&#9733;</span>
+                        ))}
+                        {Array.from({ length: 5 - Math.floor(card.rating) }, (_, index) => (
+                          <span key={index + Math.floor(card.rating)}>&#9734;</span>
+                        ))}
+                      </span>
+                    </div>
+                    <button className="btn btn-primary" onClick={() => handleAddToCart(card)}>Buy Now</button>
                   </div>
-                  <button className="buy-button" onClick={() => handleAddToCart(card)}>Buy Now</button>
                 </div>
               </div>
             </div>
           ))}
         </div>
+
         <Footer />
       </div>
     </>

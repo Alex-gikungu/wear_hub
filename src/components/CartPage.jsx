@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Footer from './Footer';
-import axios from 'axios'; // Add this line
+import axios from 'axios';
 
 const CartPage = ({ cartItems, setCartItems }) => {
   const [totalPrice, setTotalPrice] = useState(0);
@@ -24,7 +24,7 @@ const CartPage = ({ cartItems, setCartItems }) => {
     try {
       const response = await axios.post('http://localhost:3001/pay', {
         phone: formattedPhone,
-        amount: totalPrice
+        amount: totalPrice,
       });
       alert('Payment initiated. Please check your phone.');
     } catch (error) {
@@ -32,71 +32,83 @@ const CartPage = ({ cartItems, setCartItems }) => {
       alert('Payment failed. Please try again.');
     }
   };
-  
-  
 
   const handleRemove = (itemToRemove) => {
-    const updatedCartItems = cartItems.filter(item => item.id !== itemToRemove.id);
+    const updatedCartItems = cartItems.filter((item) => item.id !== itemToRemove.id);
     setCartItems(updatedCartItems);
   };
 
   return (
-    <div className="cart-page-container">
-      <h2>Cart Items</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Number of Items</th>
-            <th>Price</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {cartItems && cartItems.map((item) => (
-            <tr key={item.id}>
-              <td>{item.title}</td>
-              <td>{item.quantity}</td>
-              <td>{item.price ? `$${item.price}` : ''}</td>
-              <td>
-                <button onClick={() => handleRemove(item)}>Remove</button>
-              </td>
+    <div className="container my-5">
+      <h2 className="text-center mb-4">Your Cart</h2>
+      
+      <div className="table-responsive mb-5">
+        <table className="table table-bordered table-hover">
+          <thead className="table-dark">
+            <tr>
+              <th>Item</th>
+              <th>Number of Items</th>
+              <th>Price</th>
+              <th>Action</th>
             </tr>
-          ))}
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colSpan="2">Total Price</td>
-            <td>${totalPrice}</td>
-          </tr>
-        </tfoot>
-      </table>
+          </thead>
+          <tbody>
+            {cartItems && cartItems.map((item) => (
+              <tr key={item.id}>
+                <td>{item.title}</td>
+                <td>{item.quantity}</td>
+                <td>{item.price ? `$${item.price}` : ''}</td>
+                <td>
+                  <button className="btn btn-danger btn-sm" onClick={() => handleRemove(item)}>
+                    Remove
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colSpan="2" className="text-end">Total Price</td>
+              <td colSpan="2">${totalPrice}</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
 
       <div className="payment-section">
         <h3>Select Payment Method</h3>
-        <div className="radio-group">
-          <input type="radio" id="mpesa" name="paymentMethod" value="mpesa" checked readOnly />
-          <label htmlFor="mpesa">Mpesa</label>
+        <div className="mb-3">
+          <div className="form-check">
+            <input className="form-check-input" type="radio" id="mpesa" name="paymentMethod" value="mpesa" checked readOnly />
+            <label className="form-check-label" htmlFor="mpesa">Mpesa</label>
+          </div>
         </div>
-        <div>
-          <label htmlFor="phone">Phone Number:</label>
+
+        <div className="mb-3">
+          <label htmlFor="phone" className="form-label">Phone Number</label>
           <input
             type="text"
+            className="form-control"
             id="phone"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />
         </div>
-        <div>
-          <label htmlFor="address">Address:</label>
+
+        <div className="mb-3">
+          <label htmlFor="address" className="form-label">Address</label>
           <input
             type="text"
+            className="form-control"
             id="address"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
           />
         </div>
-        <button onClick={handlePayment}>Pay</button>
+
+        <button className="btn btn-success w-100" onClick={handlePayment}>
+          Pay Now
+        </button>
       </div>
 
       <Footer />

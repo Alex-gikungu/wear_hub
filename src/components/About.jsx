@@ -86,11 +86,10 @@ const About = ({ cartItems, setCartItems }) => {
       rating: 4.0
     },
   ];
-
+  
 
   // Function to handle adding items to the cart
   const handleAddToCart = (item) => {
-    // Check if cartItems is undefined or null before using .find()
     if (!cartItems) {
       console.log('cartItems:', cartItems);
       return;
@@ -108,49 +107,40 @@ const About = ({ cartItems, setCartItems }) => {
 
   return (
     <>
-      <div className="services-container">
-        {/* Navigation tabs */}
-        <nav className="navigation-container">
-          <ul className="navigation-links">
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/about">Men</Link></li>
-            <li><Link to="/services">Women</Link></li>
-            <li><Link to="/collection">Collection</Link></li>
-            <li><Link to="/customer-care">Customer Care</Link></li>
-          </ul>
-          {/* Pass cartItems to Cart component */}
-          <Cart cartItems={cartItems} />
-        </nav>
-
-        {/* Services content */}
-        <div className='gg'>
+      <div className="container my-5">
+        {/* Navigation */}
+        {/* Title */}
+        <div className="text-center mb-5">
           <h1><span> Our </span> Collections </h1>
           <p>This is where you can describe the various services you provide.</p>
         </div>
 
         {/* Render the cards */}
-        <div className="cards-container">
+        <div className="row">
           {cardsData.map(card => (
-            <div className="feature-card" key={card.id}>
-              <img src={card.image} alt="Feature image" className="feature-image" />
-              <div className="card-content">
-                <h3 className="card-title">{card.title}</h3>
-                <p className="card-description">{card.description}</p>
-                <div className="review-and-button">
-                  <div className="review-stars">
-                    {Array.from({ length: Math.floor(card.rating) }, (_, index) => (
-                      <span key={index} className="star">&#9733;</span>
-                    ))}
-                    {Array.from({ length: 5 - Math.floor(card.rating) }, (_, index) => (
-                      <span key={index + Math.floor(card.rating)} className="star">&#9734;</span>
-                    ))}
+            <div className="col-lg-4 col-md-6 mb-4" key={card.id}>
+              <div className="card h-100">
+                <img src={card.image} alt="Feature image" className="card-img-top" />
+                <div className="card-body">
+                  <h5 className="card-title">{card.title}</h5>
+                  <p className="card-text">{card.description}</p>
+                  <div className="d-flex justify-content-between align-items-center">
+                    <div className="review-stars">
+                      {Array.from({ length: Math.floor(card.rating) }, (_, index) => (
+                        <span key={index} className="text-warning">&#9733;</span>
+                      ))}
+                      {Array.from({ length: 5 - Math.floor(card.rating) }, (_, index) => (
+                        <span key={index + Math.floor(card.rating)} className="text-muted">&#9734;</span>
+                      ))}
+                    </div>
+                    <button className="btn btn-primary" onClick={() => handleAddToCart(card)}>Buy Now</button>
                   </div>
-                  <button className="buy-button" onClick={() => handleAddToCart(card)}>Buy Now</button>
                 </div>
               </div>
             </div>
           ))}
         </div>
+
         <Footer />
       </div>
     </>

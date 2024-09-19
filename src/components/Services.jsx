@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Footer from './Footer';
 import Cart from './Cart';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Services = ({ handleAddToCart, cartItems }) => {
-
   const cardsData = [
     {
       id: 1,
@@ -78,55 +78,43 @@ const Services = ({ handleAddToCart, cartItems }) => {
     },
   ];
 
-
   const handleBuyNow = (item) => {
     handleAddToCart(item);
   };
 
   return (
     <>
-      <div className="services-container">
+      <div className="container">
         {/* Navigation tabs */}
-        <nav className="navigation-container">
-          <ul className="navigation-links">
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/about">Men</Link></li>
-            <li><Link to="/services">Women</Link></li>
-            <li><Link to="/collection">Collection</Link></li>
-            <li><Link to="/customer-care">Customer Care</Link></li>
-          </ul>
-          {/* Display cart summary */}
-          <Cart cartItems={cartItems} />
-        </nav>
-
+       
         {/* Services content */}
-        <div className='gg'>
-          <h1><span> Women </span> Collections </h1>
-          <p>
-            This is where you can describe the various services you provide.
-          </p>
+        <div className="text-center my-4">
+          <h1><span style={{ color: '#28a745' }}>Women</span> Collections</h1>
+          <p>This is where you can describe the various services you provide.</p>
         </div>
 
         {/* Render the cards */}
-        <div className="cards-container">
+        <div className="row">
           {cardsData.map(card => (
-            <div className="feature-card" key={card.id}>
-              <img src={card.image} alt="Feature image" className="feature-image" />
-              <div className="card-content">
-                <h3 className="card-title">{card.title}</h3>
-                <p className="card-description">{card.description}</p>
-                <div className="review-and-button">
-                  <div className="review-stars">
-                    {/* Render review stars dynamically (replace with your logic) */}
-                    {Array.from({ length: Math.floor(card.rating) }, (_, index) => (
-                      <span key={index} className="star">&#9733;</span>
-                    ))}
-                    {Array.from({ length: 5 - Math.floor(card.rating) }, (_, index) => (
-                      <span key={index + Math.floor(card.rating)} className="star">&#9734;</span>
-                    ))}
+            <div className="col-md-4 mb-4" key={card.id}>
+              <div className="card">
+                <img src={card.image} alt="Feature" className="card-img-top" />
+                <div className="card-body">
+                  <h5 className="card-title">{card.title}</h5>
+                  <p className="card-text">{card.description}</p>
+                  <div className="d-flex justify-content-between align-items-center">
+                    <div>
+                      <span className="text-warning">
+                        {Array.from({ length: Math.floor(card.rating) }, (_, index) => (
+                          <span key={index}>&#9733;</span>
+                        ))}
+                        {Array.from({ length: 5 - Math.floor(card.rating) }, (_, index) => (
+                          <span key={index + Math.floor(card.rating)}>&#9734;</span>
+                        ))}
+                      </span>
+                    </div>
+                    <button className="btn btn-primary" onClick={() => handleBuyNow(card)}>Buy Now</button>
                   </div>
-                  {/* Use handleBuyNow to add item to cart */}
-                  <button className="buy-button" onClick={() => handleBuyNow(card)}>Buy Now</button>
                 </div>
               </div>
             </div>
