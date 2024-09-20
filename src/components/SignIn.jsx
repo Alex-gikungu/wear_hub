@@ -1,46 +1,46 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Signin = () => {
   const [emailOrPhone, setEmailOrPhone] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();  // To programmatically navigate after signin
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
-    const payload = {
-      email_or_phone: emailOrPhone,
-      password
-    };
-  
+    setErrorMessage(''); // Clear any previous error messages
+
     try {
-      const response = await fetch('https://shoe-hub-2.onrender.com/users', {
+      const response = await fetch('https://shoe-hub-2.onrender.com/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({
+          email: emailOrPhone,  // Use 'email' key for signin
+          password: password,
+        }),
       });
-  
+
+      const data = await response.json();
+
       if (response.ok) {
-        const data = await response.json();
-        console.log('Signin successful', data);
-        // Redirect to the homepage or dashboard after sign-in
+        // Successful signin: Redirect to the homepage
+        navigate('/homepage');
       } else {
-        const errorData = await response.json();
-        setError('Signin failed: ' + (errorData.error || 'Invalid credentials'));
+        // Show error message
+        setErrorMessage(data.error || 'Signin failed');
       }
     } catch (error) {
-      setError('Signin failed: ' + error.message);
+      setErrorMessage('An error occurred. Please try again.');
     }
-  };
-  
+};
 
 
   return (
     <div className="signin-container">
       <h2>Signin</h2>
-      {error && <p className="error-message">{error}</p>}
       <form onSubmit={handleSubmit} className="signin-form">
         <input
           type="text"
@@ -60,6 +60,9 @@ const Signin = () => {
         />
         <button type="submit" className="signin-button">Signin</button>
       </form>
+
+      {errorMessage && <p className="error-message">{errorMessage}</p>}  {/* Show error message */}
+
       <p className="signup-link">
         Don't have an account? <a href="/signup">Sign up here</a>
       </p>

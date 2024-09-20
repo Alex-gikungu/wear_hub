@@ -11,44 +11,37 @@ const Signup = ({ onClose }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    // Basic validation
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
-
+  
+    // Ensure all required fields are in the payload
+    const payload = {
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+      phone: phoneNumber,
+      password: password, // Assuming the password is being sent
+    };
+  
     try {
       const response = await fetch('https://shoe-hub-2.onrender.com/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          first_name: firstName,
-          last_name: lastName,
-          email: email,
-          phone: phoneNumber,
-          password: password,
-        }),
+        body: JSON.stringify(payload),
       });
-
-      if (!response.ok) {
-        window.location.href = '/signin'; // Or use React Router to redirect
-        }else{
-          window.location.href = '/dashboard'; // Or use React Router to redirect
-        throw new Error("Signup failed");
+  
+      if (response.ok) {
+        console.log('Signup successful');
+        window.location.href = '/signin'; // Redirect to sign-in page
+      } else {
+        const errorData = await response.json();
+        setError('Signup failed: ' + (errorData.message || 'Unknown error'));
       }
-
-      const data = await response.json();
-      console.log("Signup successful", data);
-      // Optionally, you can redirect the user or show a success message here
-    } catch (err) {
-      console.error(err);
-      setError("An error occurred while signing up");
+    } catch (error) {
+      setError('Signup failed: ' + error.message);
     }
   };
-
+  
   const handleClose = (e) => {
     e.stopPropagation();
     onClose();
