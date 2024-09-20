@@ -11,37 +11,43 @@ const Signup = ({ onClose }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
+
+    // Password match validation
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
     // Ensure all required fields are in the payload
     const payload = {
       first_name: firstName,
       last_name: lastName,
       email: email,
       phone: phoneNumber,
-      password: password, // Assuming the password is being sent
+      password: password, // Hashing handled in the backend
     };
-  
+
     try {
-      const response = await fetch('https://shoe-hub-2.onrender.com/users', {
+      const response = await fetch('https://shoe-hub-2.onrender.com/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload),
       });
-  
+
       if (response.ok) {
         console.log('Signup successful');
         window.location.href = '/signin'; // Redirect to sign-in page
       } else {
         const errorData = await response.json();
-        setError('Signup failed: ' + (errorData.message || 'Unknown error'));
+        setError('Signup failed: ' + (errorData.error || 'Unknown error'));
       }
     } catch (error) {
       setError('Signup failed: ' + error.message);
     }
   };
-  
+
   const handleClose = (e) => {
     e.stopPropagation();
     onClose();
